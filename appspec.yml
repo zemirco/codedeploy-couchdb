@@ -1,8 +1,8 @@
 version: 0.0
 os: linux
 files:
-  - source: /
-    destination: /awesome
+  - source: local.ini
+    destination: /usr/local/etc/couchdb/local.ini
 hooks:
   BeforeInstall:
     - location: scripts/before_install.sh
