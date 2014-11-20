@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# secure server
+# sudo apt-get update -y
+# sudo apt-get upgrade -y
+# sudo apt-get install fail2ban
+
 # install dependencies
 sudo apt-get install build-essential -y
 sudo apt-get install erlang-base-hipe -y
@@ -11,11 +16,16 @@ sudo apt-get install libicu-dev -y
 sudo apt-get install libmozjs-dev -y
 sudo apt-get install libcurl4-openssl-dev -y
 
-# configure
+# install couchdb
+mkdir tmp
+cd /tmp
+wget http://apache.mirror.iphh.net/couchdb/source/1.6.1/apache-couchdb-1.6.1.tar.gz
+# x extract, v verbose, z use zip, f filename
+tar xvzf apache-couchdb-*
+cd apache-couchdb-*
 ./configure
-
-# install
-make && sudo make install
+make
+sudo make install
 
 # create special couchdb user for CouchDB
 adduser --system \
