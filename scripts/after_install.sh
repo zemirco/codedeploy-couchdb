@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# replace local.ini with our custom one
+cp tmp/local.ini /usr/local/etc/couchdb/
+
 # change ownership of CouchDB directories
 chown -R couchdb:couchdb /usr/local/etc/couchdb
 chown -R couchdb:couchdb /usr/local/var/lib/couchdb
