@@ -35,11 +35,11 @@ make && sudo make install
 
 # create special couchdb user for CouchDB
 adduser --system \
-  --home /usr/local/var/lib/couchdb \   # home directory
-  --no-create-home \                    # no home directory
-  --shell /bin/bash \                   # specify login shell
-  --group --gecos \                     #
-  "CouchDB Administrator" couchdb       # with --system adds group with same name
+  --home /usr/local/var/lib/couchdb \
+  --no-create-home \
+  --shell /bin/bash \
+  --group --gecos \
+  "CouchDB Administrator" couchdb
 
 # change password for couchdb user
 # sudo passwd couchdb
