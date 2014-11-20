@@ -19,18 +19,27 @@ sudo apt-get install libcurl4-openssl-dev -y
 # install couchdb
 mkdir tmp
 cd /tmp
+
+# download tarball
 wget http://apache.mirror.iphh.net/couchdb/source/1.6.1/apache-couchdb-1.6.1.tar.gz
+
 # x extract, v verbose, z use zip, f filename
 tar xvzf apache-couchdb-*
 cd apache-couchdb-*
+
+# script will configure CouchDB to be installed into /usr/local by default.
 ./configure
-make
-sudo make install
+
+# install CouchDB
+make && sudo make install
 
 # create special couchdb user for CouchDB
 adduser --system \
-  --home /usr/local/var/lib/couchdb \
-  --no-create-home \
-  --shell /bin/bash \
-  --group --gecos \
-  "CouchDB Administrator" couchdb
+  --home /usr/local/var/lib/couchdb \   # home directory
+  --no-create-home \                    # no home directory
+  --shell /bin/bash \                   # specify login shell
+  --group --gecos \                     #
+  "CouchDB Administrator" couchdb       # with --system adds group with same name
+
+# change password for couchdb user
+# sudo passwd couchdb
