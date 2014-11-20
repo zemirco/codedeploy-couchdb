@@ -82,7 +82,7 @@ Your Amazon EC2 instances need permission to access the Amazon S3 buckets or Git
 6. In the Policy Name box, type ```"CodeDeployDemo-EC2-Permissions"```.
 
   In the Policy Document box, paste the following:
-  
+
   ```json
   {
     "Version": "2012-10-17",
@@ -191,6 +191,21 @@ arn:aws:iam::824763766161:role/couchdb-role
 3. Configure Instance
 
   IAM role: couchdb-instance-profile
+
+  Expand Advanced Details. Next to User data, with the As text option already selected.
+
+  For the US East (N. Virginia) region:
+
+  ```
+  #!/bin/bash
+  apt-get -y update
+  apt-get -y install awscli
+  apt-get -y install ruby2.0
+  cd /home/ubuntu
+  aws s3 cp s3://aws-codedeploy-us-east-1/latest/install . --region us-east-1
+  chmod +x ./install
+  ./install auto
+  ```
 
 4. Add Storage
 
