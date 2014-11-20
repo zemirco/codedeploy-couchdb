@@ -22,6 +22,7 @@ Three steps are required:
 
   - Policy Name: couchdb-codedeployment-policy
   - Policy Document:
+
     ```json
     {
       "Version": "2012-10-17",
@@ -81,6 +82,7 @@ Your Amazon EC2 instances need permission to access the Amazon S3 buckets or Git
 6. In the Policy Name box, type ```"CodeDeployDemo-EC2-Permissions"```.
 
   In the Policy Document box, paste the following:
+  
   ```json
   {
     "Version": "2012-10-17",
