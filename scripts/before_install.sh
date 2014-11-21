@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# https://cwiki.apache.org/confluence/display/COUCHDB/Ubuntu
+
 # secure server
 sudo apt-get update -y
 sudo apt-get upgrade -y
@@ -24,7 +26,7 @@ cd /tmp
 wget http://apache.mirror.iphh.net/couchdb/source/1.6.1/apache-couchdb-1.6.1.tar.gz
 
 # x extract, v verbose, z use zip, f filename
-tar xvzf apache-couchdb-*
+tar -xvzf apache-couchdb-*
 cd apache-couchdb-*
 
 # script will configure CouchDB to be installed into /usr/local by default.
@@ -34,12 +36,7 @@ cd apache-couchdb-*
 make && sudo make install
 
 # create special couchdb user for CouchDB
-adduser --system \
-  --home /usr/local/var/lib/couchdb \
-  --no-create-home \
-  --shell /bin/bash \
-  --group --gecos \
-  "CouchDB Administrator" couchdb
+sudo adduser --disabled-login --disabled-password --no-create-home --gecos "CouchDB Administrator" couchdb
 
 # change password for couchdb user
 # sudo passwd couchdb
