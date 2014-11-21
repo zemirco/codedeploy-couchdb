@@ -16,7 +16,4 @@ chmod 0770 /usr/local/var/log/couchdb
 chmod 0770 /usr/local/var/run/couchdb
 
 # create symbolic link between files
-sudo ln -s /usr/local/etc/init.d/couchdb  /etc/init.d
-
-# install CouchDB as a service and allow it to start on boot
-sudo update-rc.d couchdb defaults
+sudo ln -s /usr/local/etc/init.d/couchdb /etc/init.d/couchdb
