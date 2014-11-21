@@ -4,57 +4,15 @@
 A short tutorial for deploying CouchDB with AWS CodeDeploy.
 
 Three steps are required:
-1. Setup IAM (Identity and Access Management)
-2. Launch EC2 instance
-3. Use CodeDeploy to install CouchDB on EC2 instance
+
+1. [Setup IAM (Identity and Access Management)](#iam)
+2. [Launch EC2 instance](#ec2)
+3. [Use CodeDeploy to install CouchDB on EC2 instance](#codedeploy)
 
 ## IAM
 
-### Provision an IAM User Account
-
-1. Create an IAM user account
-
-  couchdb-user
-
-2. Grant the IAM user account access to AWS CodeDeploy
-
-  Attach User Policy -> Custom Policy
-
-  - Policy Name: couchdb-codedeployment-policy
-  - Policy Document:
-
-    ```json
-    {
-      "Version": "2012-10-17",
-      "Statement" : [
-        {
-          "Effect" : "Allow",
-          "Action" : [
-            "autoscaling:*",
-            "codedeploy:*",
-            "ec2:*",
-            "elasticloadbalancing:*",
-            "iam:AddRoleToInstanceProfile",
-            "iam:CreateInstanceProfile",
-            "iam:CreateRole",
-            "iam:DeleteInstanceProfile",
-            "iam:DeleteRole",
-            "iam:DeleteRolePolicy",
-            "iam:GetRole",
-            "iam:GetRolePolicy",
-            "iam:ListInstanceProfilesForRole",
-            "iam:ListRolePolicies",
-            "iam:ListRoles",
-            "iam:PassRole",
-            "iam:PutRolePolicy",
-            "iam:RemoveRoleFromInstanceProfile",
-            "s3:*"
-          ],
-          "Resource" : "*"
-        }
-      ]
-    }
-    ```
+You don't have to provision a user account if you're using AWS console
+and not the aws-cli.
 
 ### Create an IAM Instance Profile and a Service Role
 
@@ -63,7 +21,7 @@ Create 2 specific IAM roles that are compatible with AWS CodeDeploy.
 The first IAM role is called an IAM **instance profile**.
 The second IAM role is called a **service role**.
 
-#### Create an IAM Instance Profile for Your Amazon EC2 Instances
+#### Create an IAM Instance Profile
 
 Your Amazon EC2 instances need permission to access the Amazon S3 buckets or GitHub repositories where you're storing your applications for AWS CodeDeploy to deploy.
 
@@ -167,17 +125,6 @@ AWS CodeDeploy relies on Amazon EC2 tags or Auto Scaling group names to identify
 
 12. Note the value of the Role ARN field, as you will need it to create deployment groups later.
 
-###### rest
-
-Create IAM (Identity and Access Management) via AWS console.
-
-[Create an IAM Instance Profile for Your Amazon EC2 Instances](http://docs.aws.amazon.com/codedeploy/latest/userguide/how-to-create-iam-instance-profile.html)
-
-Role ARN
-arn:aws:iam::824763766161:role/couchdb-role
-
-
-
 ## EC2
 
 1. Choose AMI
@@ -217,29 +164,19 @@ arn:aws:iam::824763766161:role/couchdb-role
 
 Create a new security group, e.g. "launch-wizard-2"
 
-|type  | Protocol  | Port Range  | Source               |
-|------|-----------|-------------|----------------------|
-|SSH   | TCP       | 22          | Anywhere 0.0.0.0/0   |
+| type            | Protocol  | Port Range  | Source               |
+|-----------------|-----------|-------------|----------------------|
+| SSH             | TCP       | 22          | Anywhere 0.0.0.0/0   |
+| Custom TCP Rule | TCP       | 5984        | Anywhere 0.0.0.0/0   |
 
 
 
 ## Codedeploy
 
-1. Create an application
-
-2. Create New Application
+1. Create New Application
 
   - Application Name: CouchDB
   - Deployment Group Name: CouchDB-Deployment-Group
   - Add Amazon EC2 Instances: Key: "Name", Value: "CouchDB"
   - Deployment Configuration: OneAtATime
   - Service Role: *:role/couchdb-role
-
-## Rest
-
-Create revision by zipping all files.
-A revision includes `appspec.yml`, `scripts/` and all app files.
-
-```
-
-```
